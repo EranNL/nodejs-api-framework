@@ -1,1 +1,1 @@
-Easy Finance - The Open Source Financing Tool
+Ping Finance - The Open Source Financing Tool
