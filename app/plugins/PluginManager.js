@@ -19,10 +19,10 @@ class PluginManager extends EventEmitter {
      *
      * @todo make plugins dir configurable
      */
-    async loadPlugins() {
+    loadPlugins() {
         this.emit('before_load');
 
-        await fs.readdirSync(`${appRoot}/api/plugins/`).forEach(file => {
+        fs.readdirSync(`${appRoot}/api/plugins/`).forEach(file => {
             const plugin = require(`${appRoot}/api/plugins/${file}`);
             const pluginInstance = new plugin({application: application});
 
