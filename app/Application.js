@@ -13,7 +13,7 @@ class Application {
     /**
      * @type {Server}
      */
-    static server;
+    server;
 
     /**
      * @type {express}
@@ -28,13 +28,13 @@ class Application {
     /**
      * @type {PluginManager}
      */
-    static pluginManager;
+    pluginManager;
 
     constructor() {
         this.express = express();
         this.router = new Router(this.express);
-        Application.server = Server.getInstance();
-        Application.pluginManager = new PluginManager();
+        this.server = Server.getInstance();
+        this.pluginManager = new PluginManager();
 
         this.init();
     }
@@ -58,7 +58,7 @@ class Application {
     init() {
         this.loadRoutes();
 
-        Application.getPluginManager().on('plugins_loaded', count => {
+        this.getPluginManager().on('plugins_loaded', count => {
             console.log(`PluginManager: loaded ${count} plugins`);
         });
 
@@ -80,7 +80,7 @@ class Application {
      * @returns {void}
      */
     serve() {
-        Application.getServer().create(this.express).serve(3000);
+        this.getServer().create(this.express).serve(3000);
     }
 
     /**
@@ -88,12 +88,12 @@ class Application {
      *
      * @returns {Server}
      */
-    static getServer() {
-        return Application.server;
+    getServer() {
+        return this.server;
     }
 
-    static getPluginManager() {
-        return Application.pluginManager;
+    getPluginManager() {
+        return this.pluginManager;
     }
 
 }
