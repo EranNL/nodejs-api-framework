@@ -1,30 +1,40 @@
+const Server = require("./http/server/Server");
+
 const express = require('express');
 const Router = require('./routing/Router');
 
 class Application {
 
+    /**
+     * @type {Application}
+     */
+    static instance;
+
+    /**
+     * @type {Server}
+     */
+    static server;
+
+    /**
+     * @type {express}
+     */
     express;
 
+    /**
+     * @type {Router}
+     */
     router;
 
     constructor() {
         this.express = express();
         this.router = new Router(this.express);
+        Application.server = Server.getInstance();
 
         this.loadRoutes();
     }
 
-    loadRoutes() {
-        this.router.loadRoutes();
-    }
-
-    serve() {
-        this.express.listen(3000, () => {
-            console.log(`Listening on 3000`);
-        })
-    }
-
     /**
+     * Singleton instance of Application
      *
      * @returns {Application}
      */
@@ -35,8 +45,33 @@ class Application {
 
         return Application.instance;
     }
-}
 
-Application.instance = null;
+    /**
+     * Loads all routes in the express app
+     *
+     * @returns {void}
+     */
+    loadRoutes() {
+        this.router.loadRoutes();
+    }
+
+    /**
+     * Serve the application
+     *
+     * @returns {void}
+     */
+    serve() {
+        Application.getServer().create(this.express).serve(3000);
+    }
+
+    /**
+     * Returns the server
+     *
+     * @returns {Server}
+     */
+    static getServer() {
+        return Application.server;
+    }
+}
 
 module.exports = Application;
