@@ -1,5 +1,4 @@
 const EventEmitter = require('events').EventEmitter;
-const Application = require('../Application');
 const fs = require('fs');
 
 class PluginManager extends EventEmitter {
@@ -50,7 +49,7 @@ class PluginManager extends EventEmitter {
     /**
      * Returns the list of loaded plugins
      *
-     * @returns {Array}
+     * @returns {Object}
      */
     static getPlugins() {
         return PluginManager.#plugins;
