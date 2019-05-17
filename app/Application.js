@@ -2,6 +2,7 @@ const Server = require("./http/server/Server");
 const express = require('express');
 const Router = require('./routing/Router');
 const PluginManager = require('./plugins/PluginManager');
+const ConfigManager = require('./config/ConfigManager');
 
 class Application {
 
@@ -30,11 +31,17 @@ class Application {
      */
     pluginManager;
 
+    /**
+     * @type {ConfigManager}
+     */
+    config;
+
     constructor() {
         this.express = express();
         this.router = new Router(this.express);
         this.server = Server.getInstance();
         this.pluginManager = new PluginManager();
+        this.config = new ConfigManager();
 
         this.init();
     }
