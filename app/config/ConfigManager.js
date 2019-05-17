@@ -1,6 +1,7 @@
 const EventEmitter = require('events').EventEmitter;
 const path = require('path');
 const fs = require('fs');
+const _ = require('lodash');
 
 class ConfigManager extends EventEmitter {
 
@@ -24,7 +25,7 @@ class ConfigManager extends EventEmitter {
         fs.readdirSync(`${appRoot}/api/config/`).forEach(file => {
             const configPart = require(`${appRoot}/api/config/${file}`);
 
-            this.#addConfigPart(file, configPart);
+            this.#addConfigPart(file.split('.')[0], configPart);
         });
     }
 
