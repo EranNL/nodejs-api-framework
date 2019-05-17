@@ -1,7 +1,7 @@
 const Server = require("./http/server/Server");
-
 const express = require('express');
 const Router = require('./routing/Router');
+const PluginManager = require('./plugins/PluginManager');
 
 class Application {
 
@@ -26,9 +26,11 @@ class Application {
     router;
 
     constructor() {
+
         this.express = express();
         this.router = new Router(this.express);
         Application.server = Server.getInstance();
+        Application.pluginManager = new PluginManager();
 
         this.init();
     }
@@ -51,6 +53,12 @@ class Application {
      */
     init() {
         this.loadRoutes();
+
+        Application.pluginManager.on('plugins_loaded', count => {
+            console.log(`PluginManager: loaded ${count} plugins`);
+        });
+
+        Application.pluginManager.loadPlugins();
     }
 
     /**
