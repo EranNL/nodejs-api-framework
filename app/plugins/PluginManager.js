@@ -5,13 +5,13 @@ const fs = require('fs');
 class PluginManager extends EventEmitter {
 
     /**
-     * List of all loaded plugins
      * @type {Array}
      */
     static plugins = [];
 
     /**
      * Load all plugins
+     *
      * @returns {void}
      *
      * @todo make plugins dir configurable
