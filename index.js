@@ -4,5 +4,5 @@ const Application = require("./app/Application");
 global.appRoot = path.join(__dirname);
 
 global.application = Application.getInstance();
-Application.getPluginManager().loadPlugins();
+application.getPluginManager().loadPlugins();
 application.serve();
