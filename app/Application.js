@@ -30,7 +30,7 @@ class Application {
         this.router = new Router(this.express);
         Application.server = Server.getInstance();
 
-        this.loadRoutes();
+        this.init();
     }
 
     /**
@@ -44,6 +44,13 @@ class Application {
         }
 
         return Application.instance;
+    }
+
+    /**
+     * Initialize the application
+     */
+    init() {
+        this.loadRoutes();
     }
 
     /**
@@ -72,6 +79,8 @@ class Application {
     static getServer() {
         return Application.server;
     }
+
+
 }
 
 module.exports = Application;
