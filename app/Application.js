@@ -3,6 +3,7 @@ const express = require('express');
 const Router = require('./routing/Router');
 const PluginManager = require('./plugins/PluginManager');
 const ConfigManager = require('./config/ConfigManager');
+const DatabaseManager = require('./database/DatabaseManager');
 
 class Application {
 
@@ -36,6 +37,11 @@ class Application {
      */
     config;
 
+    /**
+     * @type {DatabaseManager}
+     */
+    databaseManager;
+
     constructor() {
         //Expose the application to the global node project
         global.application = this;
@@ -45,6 +51,7 @@ class Application {
         this.server = Server.getInstance();
         this.pluginManager = new PluginManager();
         this.config = new ConfigManager();
+        this.databaseManager = new DatabaseManager();
 
         this.init();
     }
@@ -106,6 +113,15 @@ class Application {
 
     getPluginManager() {
         return this.pluginManager;
+    }
+
+    /**
+     * Returns the connection
+     *
+     * @returns {mysql.Connection}
+     */
+    getConnection() {
+        return this.databaseManager.getConnection();
     }
 
 }
