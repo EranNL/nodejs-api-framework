@@ -45,7 +45,7 @@ class ConfigManager extends EventEmitter {
      * @param {*} defaultValue
      * @returns {*}
      */
-    get(path, defaultValue) {
+    get(path, defaultValue = null) {
         return _.get(this.config, path, defaultValue);
     }
 }
