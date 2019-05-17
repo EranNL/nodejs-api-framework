@@ -37,6 +37,9 @@ class Application {
     config;
 
     constructor() {
+        //Expose the application to the global node project
+        global.application = this;
+
         this.express = express();
         this.router = new Router(this.express);
         this.server = Server.getInstance();
@@ -68,6 +71,8 @@ class Application {
         this.getPluginManager().on('plugins_loaded', count => {
             console.log(`PluginManager: loaded ${count} plugins`);
         });
+
+        this.getPluginManager().loadPlugins();
 
         return this;
     }
