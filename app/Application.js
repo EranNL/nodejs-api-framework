@@ -25,8 +25,12 @@ class Application {
      */
     router;
 
-    constructor() {
+    /**
+     * @type {PluginManager}
+     */
+    static pluginManager;
 
+    constructor() {
         this.express = express();
         this.router = new Router(this.express);
         Application.server = Server.getInstance();
@@ -54,11 +58,11 @@ class Application {
     init() {
         this.loadRoutes();
 
-        Application.pluginManager.on('plugins_loaded', count => {
+        Application.getPluginManager().on('plugins_loaded', count => {
             console.log(`PluginManager: loaded ${count} plugins`);
         });
 
-        Application.pluginManager.loadPlugins();
+        return this;
     }
 
     /**
@@ -88,6 +92,9 @@ class Application {
         return Application.server;
     }
 
+    static getPluginManager() {
+        return Application.pluginManager;
+    }
 
 }
 
