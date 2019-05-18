@@ -32,7 +32,7 @@ class DatabaseManager extends EventEmitter {
         return this;
     }
 
-    performQuery(sql) {
+    query(sql) {
         const promise = new Promise((resolve, reject) => {
             this.sqlServer.query(sql, (error, results, fields) => {
                 if (error) {
