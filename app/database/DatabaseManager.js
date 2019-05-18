@@ -13,16 +13,12 @@ class DatabaseManager extends EventEmitter {
     sqlServer;
 
     init() {
-        this.sqlServer = mysql.createConnection({
-            host     : application.config.get('database.host'),
-            user     : application.config.get('database.user'),
-            password : application.config.get('database.password'),
-            database : application.config.get('database.database')
-        });
-
         try {
-            this.sqlServer.connect(err => {
-                // console.log(err);
+            this.sqlServer = mysql.createConnection({
+                host     : application.config.get('database.host'),
+                user     : application.config.get('database.user'),
+                password : application.config.get('database.password'),
+                database : application.config.get('database.database')
             });
         }
         catch (e) {
@@ -33,9 +29,23 @@ class DatabaseManager extends EventEmitter {
     }
 
     getConnection() {
-        return this.sqlServer;
+        return this;
     }
 
+    performQuery(sql) {
+        const promise = new Promise((resolve, reject) => {
+            this.sqlServer.query(sql, (error, results, fields) => {
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    resolve({results, fields});
+                }
+            });
+        });
+
+        return promise;
+    }
 }
 
 module.exports = DatabaseManager;
