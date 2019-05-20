@@ -88,6 +88,27 @@ class UserRepository extends Repository {
 module.exports = UserRepository;
 ```
 
+and in the controller:
+
+```javascript
+class TestController extends Controller {
+
+    constructor() {
+        super();
+        this.userRepository = new UserRepository();
+    }
+    
+    async index(id) {
+        const user = await this.userRepository.find(id);
+        
+        this.resonse.send(user.getName());
+    }
+}
+
+module.exports = TestController;
+
+```
+
 and as you can see, the repository requires the User model.
 
 #### Models
