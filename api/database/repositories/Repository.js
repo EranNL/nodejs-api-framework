@@ -31,7 +31,10 @@ class Repository {
         let obj = null;
 
         try {
-            const { results, fields }  = await application.getConnection().query(`SELECT ${columns.join(', ')} FROM users WHERE id = ${id}`);
+            const { results, fields }  = await application.getConnection().query(
+                `SELECT ${columns.join(', ')} FROM users WHERE id = ?`,
+                [id]
+            );
 
             if(results.length) {
                 obj = this.getModel().create(results[0]);

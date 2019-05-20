@@ -4,13 +4,13 @@ const Application = require('../../app/Application');
 
 class DatabaseManager extends EventEmitter {
 
+    sqlServer;
+
     constructor() {
         super();
 
         this.init();
     }
-
-    sqlServer;
 
     init() {
         try {
@@ -32,9 +32,9 @@ class DatabaseManager extends EventEmitter {
         return this;
     }
 
-    query(sql) {
+    query(sql, params = []) {
         const promise = new Promise((resolve, reject) => {
-            this.sqlServer.query(sql, (error, results, fields) => {
+            this.sqlServer.query(sql, params, (error, results, fields) => {
                 if (error) {
                     reject(error);
                 }
