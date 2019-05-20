@@ -14,7 +14,7 @@ class Repository {
         let all = [];
 
         try {
-            const { results, fields }  = await application.getConnection().performQuery(`SELECT ${columns.join(', ')} FROM users`);
+            const { results, fields }  = await application.getConnection().query(`SELECT ${columns.join(', ')} FROM users`);
 
             for (let i = 0; i < results.length; i++) {
                 all.push(this.getModel().create(results[i]));
@@ -31,7 +31,10 @@ class Repository {
         let obj = null;
 
         try {
-            const { results, fields }  = await application.getConnection().performQuery(`SELECT ${columns.join(', ')} FROM users WHERE id = ${id}`);
+            const { results, fields }  = await application.getConnection().query(
+                `SELECT ${columns.join(', ')} FROM users WHERE id = ?`,
+                [id]
+            );
 
             if(results.length) {
                 obj = this.getModel().create(results[0]);
